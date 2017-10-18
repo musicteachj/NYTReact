@@ -15,7 +15,12 @@ app.use(bodyParser.json({type:'application/vnd.api+json'}));
 app.use(express.static('./public'));
 
 //Local link
-var link = 'mongodb://localhost/nytreact';
+var link;
+if (process.env.NODE_ENV === "production") {
+    link = process.env.MONGODB_URI;
+} else {
+    link = "mongodb://localhost/nytreact";
+}
 
 mongoose.connect(link);
 var db = mongoose.connection;
